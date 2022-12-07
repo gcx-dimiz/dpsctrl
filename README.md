@@ -36,6 +36,17 @@ options:
 ./dpsctrl.py -d /dev/ttyUSB2 -C 0.5
 ```
 
+## How To Un- / Install the script localy
+
+```shell
+make install
+```
+
+Afther the installation it can be used in the follwoing manner
+
+```shell
+python -m dpsctrl --help
+```
 
 ## Based On
 
