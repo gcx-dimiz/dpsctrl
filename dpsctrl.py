@@ -295,6 +295,7 @@ class DPS_Handler:
             set backlight level between 5 and 1
         """
         res = self.__cmd_write_reg(self.SLAVEADD, self.REG_BLED, int(level))
+        return res
 
     def __init__(self,DPSport,DPSspeed):
         self.__DPS = serial.Serial(port = DPSport,
