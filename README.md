@@ -3,7 +3,7 @@
 ```shell
 usage: dpsctrl.py [-h] -d DEVICE [-s SPEED] [-i] [-V VOLTAGE] [-A CURRENT] [-1 | -0]
 
-Process some integers.
+controll the DPS5005
 
 options:
   -h, --help            show this help message and exit
@@ -39,7 +39,11 @@ options:
 ## How To Un- / Install the script localy
 
 ```shell
+# install
 make install
+
+# uninstall
+make uninstall
 ```
 
 Afther the installation it can be used in the follwoing manner
