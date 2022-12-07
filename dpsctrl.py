@@ -290,6 +290,8 @@ class DPS_Handler:
         self.__DPS = serial.Serial(port = DPSport,
                         baudrate=DPSspeed,
                         timeout = 0.01)
+    def __del__(self):
+        self.__DPS.close()
 
 def parse_args():
     default_device = os.environ.get('DPSCTRL_DEVICE')
