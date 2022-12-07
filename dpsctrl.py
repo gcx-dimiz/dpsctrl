@@ -285,6 +285,8 @@ class DPS_Handler:
         """
             set a new over-power protection value
         """
+            res = self.__cmd_write_reg(self.SLAVEADD,self.REG_M_SOPP,round(watts*100))
+            return res
 
     def __init__(self,DPSport,DPSspeed):
         self.__DPS = serial.Serial(port = DPSport,
