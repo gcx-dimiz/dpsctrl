@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import serial
 import argparse
+import os
 from time import sleep,time,localtime,strftime,perf_counter
 
 class DPS_Handler:
@@ -291,8 +292,14 @@ class DPS_Handler:
                         timeout = 0.01)
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('-d', '--device', action='store', required=True)
+    default_device = os.environ.get('DPSCTRL_DEVICE')
+    parser = argparse.ArgumentParser(description='controll the DPS5005')
+
+    if default_device == None:
+        parser.add_argument('-d', '--device', action='store', required=True)
+    else:
+        parser.add_argument('-d', '--device', action='store', default=default_device)
+
     parser.add_argument('-s', '--speed', action='store', default=9600)
     parser.add_argument('-i', '--info', action='store_true')
     parser.add_argument('-V', '--voltage', action='store')
