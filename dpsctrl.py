@@ -78,6 +78,7 @@ class DPS_Handler:
     __ovp		= 0.0	# last commanded over-voltage protection reported by DPS
     __ocp		= 0.0	# last commanded over-current protection reported by DPS
     __opp		= 0.0	# last commanded over-power protection reported by DPS
+    __bled      = 0
 
     def __dump(self,prompt,buf):
         """
@@ -238,6 +239,7 @@ class DPS_Handler:
     def Get_OVP(self):	return self.__ovp	 	# updated after Set_OVP
     def Get_OCP(self):	return self.__ocp	 	# updated after Set_OCP
     def Get_OPP(self):	return self.__opp	 	# updated after Set_OPP
+    def Get_BLED(self): return self.__bled      # updated after Read_Output_Values
 
     def Read_Output_Values(self):
         """
@@ -282,16 +284,23 @@ class DPS_Handler:
         return res
 
     def Set_OPP(self, watts):
-        """
-            set a new over-power protection value
-        """
+            """
+                set a new over-power protection value
+            """
             res = self.__cmd_write_reg(self.SLAVEADD,self.REG_M_SOPP,round(watts*100))
             return res
+
+    def Set_BLED(self, level):
+        """
+            set backlight level between 5 and 1
+        """
+        res = self.__cmd_write_reg(self.SLAVEADD, self.REG_BLED, int(level))
 
     def __init__(self,DPSport,DPSspeed):
         self.__DPS = serial.Serial(port = DPSport,
                         baudrate=DPSspeed,
                         timeout = 0.01)
+
     def __del__(self):
         self.__DPS.close()
 
@@ -308,6 +317,7 @@ def parse_args():
     parser.add_argument('-i', '--info', action='store_true')
     parser.add_argument('-V', '--voltage', action='store')
     parser.add_argument('-A', '--current', action='store')
+    parser.add_argument('-b', '--brightness', action='store', type=int, choices=range(0,6))
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-1', '--on', action='store_true')
@@ -340,6 +350,8 @@ def main():
         dps.Set_USET(float(args.voltage))
     if(args.current):
         dps.Set_ISET(float(args.current))
+    if(args.brightness):
+        dps.Set_BLED(args.brightness)
 
 if __name__ == "__main__":
     main()
