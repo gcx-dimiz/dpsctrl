@@ -8,6 +8,9 @@ version = "1.0.0"
 authors = [
   { name="Example Author", email="author@example.com" },
 ]
+dependencies = [
+    "pyserial >= 3.5",
+]
 description = "DPS5005 control script"
 readme = "README.md"
 requires-python = ">=3.10"
